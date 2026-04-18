@@ -51,7 +51,7 @@ void XBeeManager ::drvReceiveIn_handler(FwIndexType portNum, Fw::Buffer& buffer,
     // On a good read when not in transparent mode, we process data
     if (status == Drv::ByteStreamStatus::OP_OK && current_state != PASSTHROUGH && current_state != ERROR_TIMEOUT &&
         current_state != QUIET_RADIO) {
-        m_circular.serialize(buffer.getData(), buffer.getSize());
+        m_circular.serializeTo(buffer.getData(), buffer.getSize());
         state_machine();
         // return buffer ownership after processing
         this->drvReceiveReturnOut_out(0, buffer);

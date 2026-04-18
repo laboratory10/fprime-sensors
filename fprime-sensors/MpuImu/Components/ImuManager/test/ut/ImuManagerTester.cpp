@@ -148,13 +148,13 @@ void ImuManagerTester ::fill_read_data(Fw::Buffer& readBuffer) {
     raw.gyroscope[1] = STest::Pick::lowerUpper(0, 0xFFFF);
     raw.gyroscope[2] = STest::Pick::lowerUpper(0, 0xFFFF);
     auto serializer = readBuffer.getSerializer();
-    serializer.serialize(raw.acceleration[0]);
-    serializer.serialize(raw.acceleration[1]);
-    serializer.serialize(raw.acceleration[2]);
-    serializer.serialize(raw.temperature);
-    serializer.serialize(raw.gyroscope[0]);
-    serializer.serialize(raw.gyroscope[1]);
-    serializer.serialize(raw.gyroscope[2]);
+    serializer.serializeTo(raw.acceleration[0]);
+    serializer.serializeTo(raw.acceleration[1]);
+    serializer.serializeTo(raw.acceleration[2]);
+    serializer.serializeTo(raw.temperature);
+    serializer.serializeTo(raw.gyroscope[0]);
+    serializer.serializeTo(raw.gyroscope[1]);
+    serializer.serializeTo(raw.gyroscope[2]);
     this->imuData = ImuManager::convert_raw_data(raw, this->accelerationRange, this->gyroscopeRange);
 }
 

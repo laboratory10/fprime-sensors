@@ -18,7 +18,7 @@ namespace NmeaGps {
 
     TEST(NemaFrameDetector, WellFormedMessage) {
         Types::CircularBuffer data(BUFFER, sizeof(BUFFER));
-        data.serialize(reinterpret_cast<const U8*>(GOOD_MESSAGE), sizeof(GOOD_MESSAGE));
+        data.serializeTo(reinterpret_cast<const U8*>(GOOD_MESSAGE), sizeof(GOOD_MESSAGE));
 
         FwSizeType size_out = 0;
         NmeaGps::NmeaDetector detector;
@@ -28,7 +28,7 @@ namespace NmeaGps {
 
     TEST(NemaFrameDetector, NoChecksum) {
         Types::CircularBuffer data(BUFFER, sizeof(BUFFER));
-        data.serialize(reinterpret_cast<const U8*>(NO_CHECKSUM), sizeof(NO_CHECKSUM));
+        data.serializeTo(reinterpret_cast<const U8*>(NO_CHECKSUM), sizeof(NO_CHECKSUM));
 
         FwSizeType size_out = 0;
         NmeaGps::NmeaDetector detector;
@@ -38,7 +38,7 @@ namespace NmeaGps {
 
     TEST(NemaFrameDetector, BadChecksum) {
         Types::CircularBuffer data(BUFFER, sizeof(BUFFER));
-        data.serialize(reinterpret_cast<const U8*>(BAD_CHECKSUM), sizeof(BAD_CHECKSUM));
+        data.serializeTo(reinterpret_cast<const U8*>(BAD_CHECKSUM), sizeof(BAD_CHECKSUM));
 
         FwSizeType size_out = 0;
         NmeaGps::NmeaDetector detector;
@@ -49,7 +49,7 @@ namespace NmeaGps {
 
     TEST(NemaFrameDetector, BadStartCharacter) {
         Types::CircularBuffer data(BUFFER + 1, sizeof(BUFFER) - 1);
-        data.serialize(reinterpret_cast<const U8*>(BAD_CHECKSUM), sizeof(BAD_CHECKSUM));
+        data.serializeTo(reinterpret_cast<const U8*>(BAD_CHECKSUM), sizeof(BAD_CHECKSUM));
 
         FwSizeType size_out = 0;
         NmeaGps::NmeaDetector detector;
@@ -62,7 +62,7 @@ namespace NmeaGps {
         NmeaGps::NmeaDetector detector;
 
         for (FwSizeType i = 0; i < sizeof(GOOD_MESSAGE) - 1; i++) {
-            data.serialize(reinterpret_cast<const U8*>(GOOD_MESSAGE + i), 1);
+            data.serializeTo(reinterpret_cast<const U8*>(GOOD_MESSAGE + i), 1);
             FwSizeType size_out = 0;
             // Lest than last iteration should ask for more data
             if (i < sizeof(GOOD_MESSAGE) - 2) {
